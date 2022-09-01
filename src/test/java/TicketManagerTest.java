@@ -24,7 +24,7 @@ public class TicketManagerTest {
         doReturn(tickets).when(repo).findAll();
 
         Ticket[] expected = {ticket4, ticket1, ticket5, ticket3, ticket6};
-        Ticket[] actual = manager.searchByAirport("SVO", "KZN");
+        Ticket[] actual = manager.findAll("SVO", "KZN");
 
         Assertions.assertArrayEquals(expected, actual);
     }
@@ -35,7 +35,7 @@ public class TicketManagerTest {
         doReturn(tickets).when(repo).findAll();
 
         Ticket[] expected = {ticket2};
-        Ticket[] actual = manager.searchByAirport("VKO", "KZN");
+        Ticket[] actual = manager.findAll("VKO", "KZN");
 
         Assertions.assertArrayEquals(expected, actual);
     }
@@ -46,7 +46,7 @@ public class TicketManagerTest {
         doReturn(tickets).when(repo).findAll();
 
         Ticket[] expected = {};
-        Ticket[] actual = manager.searchByAirport("LED", "DME");
+        Ticket[] actual = manager.findAll("LED", "DME");
 
         Assertions.assertArrayEquals(expected, actual);
     }
