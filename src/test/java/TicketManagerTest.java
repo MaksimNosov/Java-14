@@ -14,7 +14,7 @@ public class TicketManagerTest {
     Ticket ticket2 = new Ticket(2, 2_199, "VKO", "KZN", 95);
     Ticket ticket3 = new Ticket(3, 1_899, "SVO", "KZN", 85);
     Ticket ticket4 = new Ticket(4, 1_099, "SVO", "KZN", 105);
-    Ticket ticket5 = new Ticket(5, 1_799, "SVO", "KZN", 105);
+    Ticket ticket5 = new Ticket(5, 1_799, "SVO", "KZN", 100);
     Ticket ticket6 = new Ticket(5, 1_899, "SVO", "KZN", 120);
 
 
@@ -50,6 +50,37 @@ public class TicketManagerTest {
 
         Assertions.assertArrayEquals(expected, actual);
     }
+
+    @Test
+    public void shouldSearchByAirportSortByTime() {       //находит несколько билетов и сортирует их по времени в пути от меньшего к большему
+        Ticket[] tickets = {ticket1, ticket2, ticket3, ticket4, ticket5, ticket6};
+        doReturn(tickets).when(repo).findAll();
+
+        Ticket[] expected = {ticket3, ticket1, ticket5, ticket4, ticket6};
+        Ticket[] actual = manager.findAll("SVO", "KZN", Ticket::compareTo);
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSearchByAirportSortByTime2() {       //не находит ни один билет
+        Ticket[] tickets = {ticket1, ticket2, ticket3, ticket4, ticket5, ticket6};
+        doReturn(tickets).when(repo).findAll();
+
+        Ticket[] expected = {};
+        Ticket[] actual = manager.findAll("LED", "KZN", Ticket::compareTo);
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldSearchByAirportSortByTime3() {       //находит один билет
+        Ticket[] tickets = {ticket1, ticket2, ticket3, ticket4, ticket5, ticket6};
+        doReturn(tickets).when(repo).findAll();
+
+        Ticket[] expected = {ticket2};
+        Ticket[] actual = manager.findAll("VKO", "KZN", Ticket::compareTo);
+
+        Assertions.assertArrayEquals(expected, actual);
+    }
 }
-
-
